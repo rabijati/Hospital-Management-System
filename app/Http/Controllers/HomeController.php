@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 use App\Models\Doctor;
+use App\Models\Appointment;
 
 
 
@@ -39,5 +40,26 @@ class HomeController extends Controller
         $doctor = doctor::all();
         return view('user.home',compact('doctor'));
         }
+    }
+
+    public function appointment(Request $request){
+        $data = new appointment;
+        $data->name=$request->name;
+        $data->email=$request->email;
+        $data->date=$request->date;
+        $data->phone=$request->number;
+        $data->message=$request->message;
+        $data->doctor=$request->doctor;
+        $data->status='In Progress';
+
+        if(Auth::id())
+        {
+        $data->user_id=Auth::user()->id;
+        }
+
+        $data->save();
+
+        return redirect()->back()->with('message', 'Appointment Request Successful. We will contact with you soon');
+
     }
 }
