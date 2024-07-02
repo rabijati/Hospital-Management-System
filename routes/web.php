@@ -14,10 +14,18 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class,'index']);
 Route::get('/home',[HomeController::class,'redirect']);
+
+
+// Auth routes for login and register
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
 
 Route::middleware([
     'auth:sanctum',
